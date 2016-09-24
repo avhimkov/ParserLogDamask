@@ -4,28 +4,29 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Main {
 
     public static void main(String[] args) {
-        try {
-//            PrintWriter result = new PrintWriter("result.txt");
-            PrintWriter currentLog = null;
+        File myFile = new File("2016-09-22-com.txt");
 
-            Scanner s = new Scanner(new File("C:\\Users\\AvhimkovDL\\Desktop\\Отчеты Дамаск\\12 часов 22.09.2016\\2016-09-22-com.txt"));
-            while (s.hasNextLine()) {
-                String line = s.nextLine();
-                if (line.startsWith("0"))
-                    System.out.println(currentLog);// = result;
+        Pattern myPat = Pattern.compile("#ONLINE");
 
-//                else if (currentLog != null)
-//                    currentLog.println(line);
+        try{
+            Scanner myScan = new Scanner(myFile);
+
+            while(myScan.hasNext()){
+                String line = myScan.nextLine();
+                if (myPat.matcher(line).find()) {
+                    System.out.println(line);
+                }
             }
 
-//            result.close();
-//            s.close();
-        } catch (IOException ioex) {
-            // handle exception...
+        }catch(Exception ignored){
+
         }
+
+
     }
 }
