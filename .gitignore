@@ -1,2 +1,6 @@
 *.iml
 .idea
+out
+out/
+result.txt
+2016-09-22-com.txt
