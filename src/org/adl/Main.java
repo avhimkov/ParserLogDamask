@@ -37,23 +37,28 @@ public class Main {
 //            проход по строка и поиск згачений
             while (myScan.hasNextLine()) {
                 String line = myScan.nextLine();
+                String[] substr = line.split(" ");
 //                вывод строк в друго порчдеке
                 if (offline.matcher(line).find()) {
-                    String time = line.substring(0, 8);
-                    String okno = line.substring(17, 26);
-                    System.out.println("Время: " + time + " " + okno + " Нет связи");
+                    String okno = substr[1];
+                    String time = substr[0];
+                    String time1 = time.substring(0, 8);
+                    System.out.println("Время: " + time1 + " " + okno + " Нет связи");
                 } else if (online.matcher(line).find()) {
-                    String time = line.substring(0, 8);
-                    String okno = line.substring(17, 26);
-                    System.out.println("Время: " + time + " " + okno + "  На связи");
+                    String okno = substr[1];
+                    String time = substr[0];
+                    String time1 = time.substring(0, 8);
+                    System.out.println("Время: " + time1 + " " + okno + " Нет связи");
                 } else if (keyoff.matcher(line).find()) {
-                    String time = line.substring(0, 8);
-                    String okno = line.substring(17, 26);
-                    System.out.println("Время: " + time + " " + okno + " Нажата кнопка отключить");
+                    String okno = substr[1];
+                    String time = substr[0];
+                    String time1 = time.substring(0, 8);
+                    System.out.println("Время: " + time1 + " " + okno + " Нажата кнопка отключить");
                 } else if (keyon.matcher(line).find()) {
-                    String time = line.substring(0, 8);
-                    String okno = line.substring(17, 26);
-                    System.out.println("Время: " + time + " " + okno + " Нажата кнопка включить");
+                    String okno = substr[1];
+                    String time = substr[0];
+                    String time1 = time.substring(0, 8);
+                    System.out.println("Время: " + time1 + " " + okno + " Нажата кнопка включить");
                 }
             }
         } catch (FileNotFoundException e) {
