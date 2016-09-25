@@ -1,7 +1,6 @@
 package org.adl;
 
 import java.io.*;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.lang.String;
@@ -20,40 +19,46 @@ public class Main {
             String data = (god + "-" + mon + "-" + den + "-com.txt");
             String ffile = findFile("D:\\1", data);//"2016-09-22-com.txt"
             findString(ffile, "#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED");
-
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println("Введите дату в формате DD.MM.GGGG (пример: 01.01.2016)");
+//            System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.GGGG (пример: 01.01.2016)");
         }
-
     }
 
-    //Вывод найденные слова
+    //Вывод найденные строки
     static void findString(String put, String offrex, String onrex, String keyoffrex, String keyonrex) {
 
         try {
-            File myFile = new File(put);
-
+            InputStream myFile = new BufferedInputStream(new FileInputStream(put));
             Pattern offline = Pattern.compile(offrex);
             Pattern online = Pattern.compile(onrex);
             Pattern keyoff = Pattern.compile(keyoffrex);
             Pattern keyon = Pattern.compile(keyonrex);
             Scanner myScan = new Scanner(myFile, "windows-1251");
-
-            while (myScan.hasNext()) {
-
+//            проход по строка и поиск згачений
+            while (myScan.hasNextLine()) {
                 String line = myScan.nextLine();
+//                вывод строк в друго порчдеке
                 if (offline.matcher(line).find()) {
-                    System.out.println(line);
+                    String time = line.substring(0, 8);
+                    String okno = line.substring(17, 26);
+                    System.out.println("Время: " + time + " " + okno + " Нет связи");
                 } else if (online.matcher(line).find()) {
-                    System.out.println(line);
+                    String time = line.substring(0, 8);
+                    String okno = line.substring(17, 26);
+                    System.out.println("Время: " + time + " " + okno + "  На связи");
                 } else if (keyoff.matcher(line).find()) {
-                    System.out.println(line);
+                    String time = line.substring(0, 8);
+                    String okno = line.substring(17, 26);
+                    System.out.println("Время: " + time + " " + okno + " Нажата кнопка отключить");
                 } else if (keyon.matcher(line).find()) {
-                    System.out.println(line);
+                    String time = line.substring(0, 8);
+                    String okno = line.substring(17, 26);
+                    System.out.println("Время: " + time + " " + okno + " Нажата кнопка включить");
                 }
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println("Фаил не найден");
+//            e.printStackTrace();
         }
     }
 
