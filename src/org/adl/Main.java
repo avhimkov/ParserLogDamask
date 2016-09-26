@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 // Меняем вывод даты при вводе
         try {
-
+//          ввод даты в консоль
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             String read = input.readLine();
             String den = read.substring(0, 2);//22.09.2016
@@ -19,13 +19,15 @@ public class Main {
             String god = read.substring(6, 10);
             String data = (god + "-" + mon + "-" + den + "-com.txt");
 
+//          чтение файла конфигурации
             InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
             Scanner myScan = new Scanner(myFile, "windows-1251");
             myScan.hasNext();
             String line = myScan.nextLine();
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
-
+//          вызов функции для поиска строк
             findString(ffile, "#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED");
+
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.GGGG (пример: 01.01.2016)");
         }
@@ -76,6 +78,7 @@ public class Main {
         }
     }
 
+    //  поиск файла в директории
     static String findFile(String path, String find) {
         File f = new File(path);
         String[] list = f.list();     //список файлов в текущей папке
@@ -97,15 +100,6 @@ public class Main {
         }
         return path + "\\" + find;
     }
-
-//    static String pathFile() throws FileNotFoundException {
-//        InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
-//        Scanner myScan = new Scanner(myFile, "windows-1251");
-//        myScan.hasNext();
-//        String line = myScan.nextLine();
-//        return line;
-//    }
-
 }
 
 
