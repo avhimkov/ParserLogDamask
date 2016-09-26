@@ -35,7 +35,7 @@ public class Main {
             Pattern keyon = Pattern.compile(keyonrex);
             Scanner myScan = new Scanner(myFile, "windows-1251");
 //            проход по строка и поиск згачений
-            while (myScan.hasNextLine()) {
+            while (myScan.hasNext()) {
                 String line = myScan.nextLine();
                 String[] substr = line.split(" ");
 
@@ -58,13 +58,12 @@ public class Main {
                 } else if (keyon.matcher(line).find()) {
                     String okno = substr[1];
                     String time = substr[0];
-                    String name = substr[4];
-//                    String name = substr.length>3 ? substr[4] : "Нет";
+//                    String name = substr[4];
+
                     String time1 = time.substring(0, 8);
-                    System.out.println("Время: " + time1 + " " + okno + " Имя " + name + " Нажата кнопка включить");
+                    System.out.println("Время: " + time1 + " " + okno + " Имя " + /*name + */" Нажата кнопка включить");
                 }
             }
-//            while (String line)
         } catch (FileNotFoundException e) {
             System.out.println("Фаил не найден");
 //            e.printStackTrace();
