@@ -20,7 +20,7 @@ public class Main {
             String ffile = findFile("D:\\1", data);//"2016-09-22-com.txt"
             findString(ffile, "#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED");
         } catch (StringIndexOutOfBoundsException e) {
-//            System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.GGGG (пример: 01.01.2016)");
+            System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.GGGG (пример: 01.01.2016)");
         }
     }
 
@@ -38,13 +38,14 @@ public class Main {
             while (myScan.hasNextLine()) {
                 String line = myScan.nextLine();
                 String[] substr = line.split(" ");
+
 //                вывод строк в друго порчдеке
-                if (offline.matcher(line).find()) {
+                if (online.matcher(line).find()) {
                     String okno = substr[1];
                     String time = substr[0];
                     String time1 = time.substring(0, 8);
-                    System.out.println("Время: " + time1 + " " + okno + " Нет связи");
-                } else if (online.matcher(line).find()) {
+                    System.out.println("Время: " + time1 + " " + okno + " Соединение установлено");
+                } else if (offline.matcher(line).find()) {
                     String okno = substr[1];
                     String time = substr[0];
                     String time1 = time.substring(0, 8);
@@ -57,10 +58,13 @@ public class Main {
                 } else if (keyon.matcher(line).find()) {
                     String okno = substr[1];
                     String time = substr[0];
+                    String name = substr[4];
+//                    String name = substr.length>3 ? substr[4] : "Нет";
                     String time1 = time.substring(0, 8);
-                    System.out.println("Время: " + time1 + " " + okno + " Нажата кнопка включить");
+                    System.out.println("Время: " + time1 + " " + okno + " Имя " + name + " Нажата кнопка включить");
                 }
             }
+//            while (String line)
         } catch (FileNotFoundException e) {
             System.out.println("Фаил не найден");
 //            e.printStackTrace();
@@ -74,24 +78,19 @@ public class Main {
         for (String file : list) {      //проверка на совпадение
             if (find.equals(file)) {
                 flag = true;
-//                System.out.println(path + "\\" + file + " !!!!!!!!!!!!!!!!!!");  //если найден, то выход
-////                return path;
             }
             if (!path.endsWith("\\")) {
                 path += "\\";
             }
             File tempfile = new File(path + file);
-//            System.out.println(path + file);
             if (!file.equals(".") && !file.equals("..")) {        //!!!
                 if (tempfile.isDirectory()) {      //иначе проверяем, если это папка
-                    //path += file;
                     findFile(path + file, find);               //то рекурсивный вызов этой функции
                     if (flag) return file;
                 }
             }
         }
-        String put = path + "\\" + find;
-        return put;
+        return path + "\\" + find;
     }
 }
 
