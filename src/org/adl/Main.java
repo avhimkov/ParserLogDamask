@@ -48,7 +48,6 @@ public class Main {
             while (myScan.hasNext()) {
                 String line = myScan.nextLine();
                 String[] substr = line.split(" ");
-
 //                вывод строк в друго порчдеке
                 if (online.matcher(line).find()) {
                     String okno = substr[1];
@@ -66,11 +65,12 @@ public class Main {
                     String time1 = timest.substring(0, 8);
                     System.out.println("Время: " +time1 + " " + "\033[31m" +  okno + "\033[m" + " Нажата кнопка отключить");
                 } else if (keyon.matcher(line).find()) {
+//                    int index;
                     String okno = substr[1];
                     String timest = substr[0];
                     String time1 = timest.substring(0, 8);
-//                    String name = substr[4];
-                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Имя " + /*name + */" Нажата кнопка включить");
+                    String name = substr[substr.length-1];
+                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Имя " + name +  " Нажата кнопка включить");
                 }
             }
         } catch (FileNotFoundException e) {
@@ -78,7 +78,6 @@ public class Main {
 //            e.printStackTrace();
         }
     }
-
     //  поиск файла в директории
     static String findFile(String path, String find) {
         File f = new File(path);
