@@ -25,6 +25,7 @@ public class Main {
             myScan.hasNext();
             String line = myScan.nextLine();
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
+
 //          вызов функции для поиска строк
             findString(ffile, "#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED");
 
@@ -53,23 +54,23 @@ public class Main {
                     String okno = substr[1];
                     String timest = substr[0];
                     String time1 = timest.substring(0, 8);
-                    System.out.println("Время: " + time1 + " " + okno + " Соединение установлено");
+                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
                 } else if (offline.matcher(line).find()) {
                     String okno = substr[1];
                     String timest = substr[0];
                     String time1 = timest.substring(0, 8);
-                    System.out.println("Время: " + time1 + " " + okno + " Нет связи");
+                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Нет связи");
                 } else if (keyoff.matcher(line).find()) {
                     String okno = substr[1];
                     String timest = substr[0];
                     String time1 = timest.substring(0, 8);
-                    System.out.println("Время: " + time1 + " " + okno + " Нажата кнопка отключить");
+                    System.out.println("Время: " +time1 + " " + "\033[31m" +  okno + "\033[m" + " Нажата кнопка отключить");
                 } else if (keyon.matcher(line).find()) {
                     String okno = substr[1];
                     String timest = substr[0];
                     String time1 = timest.substring(0, 8);
 //                    String name = substr[4];
-                    System.out.println("Время: " + time1 + " " + okno + " Имя " + /*name + */" Нажата кнопка включить");
+                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Имя " + /*name + */" Нажата кнопка включить");
                 }
             }
         } catch (FileNotFoundException e) {
