@@ -48,7 +48,7 @@ public class Main {
             while (myScan.hasNext()) {
                 String line = myScan.nextLine();
                 String[] substr = line.split(" ");
-//                вывод строк в друго порчдеке
+//                вывод строк в другом порчдеке
                 if (online.matcher(line).find()) {
                     String okno = substr[1];
                     String timest = substr[0];
@@ -70,7 +70,7 @@ public class Main {
                     String timest = substr[0];
                     String time1 = timest.substring(0, 8);
                     String name = substr[substr.length-1];
-                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Имя " + name +  " Нажата кнопка включить");
+                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Имя " + "\033[32m" + name + "\033[m" +  " Нажата кнопка включить");
                 }
             }
         } catch (FileNotFoundException e) {
