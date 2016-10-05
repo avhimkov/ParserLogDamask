@@ -25,9 +25,9 @@ public class Main {
             myScan.hasNext();
             String line = myScan.nextLine();
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
-
+            String serchString = "ПО_Okno-6";
 //          вызов функции для поиска строк
-            findString(ffile, "#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED");
+            findString(ffile, "#OFFLINE"); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
 
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.GGGG (пример: 01.01.2016)");
@@ -35,14 +35,14 @@ public class Main {
     }
 
     //Вывод найденные строки
-    static void findString(String put, String offrex, String onrex, String keyoffrex, String keyonrex) {
-
+    static void findString(String put, String onrex) {
+//String offrex, String onrex, String keyoffrex, String keyonrex
         try {
             InputStream myFile = new BufferedInputStream(new FileInputStream(put));
-            Pattern offline = Pattern.compile(offrex);
+//            Pattern offline = Pattern.compile(offrex);
             Pattern online = Pattern.compile(onrex);
-            Pattern keyoff = Pattern.compile(keyoffrex);
-            Pattern keyon = Pattern.compile(keyonrex);
+//            Pattern keyoff = Pattern.compile(keyoffrex);
+//            Pattern keyon = Pattern.compile(keyonrex);
             Scanner myScan = new Scanner(myFile, "windows-1251");
 //            проход по строка и поиск згачений
             while (myScan.hasNext()) {
@@ -54,24 +54,25 @@ public class Main {
                     String timest = substr[0];
                     String time1 = timest.substring(0, 8);
                     System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
-                } else if (offline.matcher(line).find()) {
-                    String okno = substr[1];
-                    String timest = substr[0];
-                    String time1 = timest.substring(0, 8);
-                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Нет связи");
-                } else if (keyoff.matcher(line).find()) {
-                    String okno = substr[1];
-                    String timest = substr[0];
-                    String time1 = timest.substring(0, 8);
-                    System.out.println("Время: " +time1 + " " + "\033[31m" +  okno + "\033[m" + " Нажата кнопка отключить");
-                } else if (keyon.matcher(line).find()) {
-//                    int index;
-                    String okno = substr[1];
-                    String timest = substr[0];
-                    String time1 = timest.substring(0, 8);
-                    String name = substr[substr.length-1];
-                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Имя " + "\033[32m" + name + "\033[m" +  " Нажата кнопка включить");
                 }
+//                else if (offline.matcher(line).find()) {
+//                    String okno = substr[1];
+//                    String timest = substr[0];
+//                    String time1 = timest.substring(0, 8);
+//                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Нет связи");
+//                } else if (keyoff.matcher(line).find()) {
+//                    String okno = substr[1];
+//                    String timest = substr[0];
+//                    String time1 = timest.substring(0, 8);
+//                    System.out.println("Время: " +time1 + " " + "\033[31m" +  okno + "\033[m" + " Нажата кнопка отключить");
+//                } else if (keyon.matcher(line).find()) {
+////                    int index;
+//                    String okno = substr[1];
+//                    String timest = substr[0];
+//                    String time1 = timest.substring(0, 8);
+//                    String name = substr[substr.length-1];
+//                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Имя " + "\033[32m" + name + "\033[m" +  " Нажата кнопка включить");
+//                }
             }
         } catch (FileNotFoundException e) {
             System.out.println("Фаил не найден");
