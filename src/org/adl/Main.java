@@ -19,15 +19,19 @@ public class Main {
             String god = read.substring(6, 10);
             String data = (god + "-" + mon + "-" + den + "-com.txt");
 
+            BufferedReader input2 = new BufferedReader(new InputStreamReader(System.in));
+            String read2 = input2.readLine();
+            String text = read2.substring(0, 2);//22.09.2016
+
 //          чтение файла конфигурации
             InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
             Scanner myScan = new Scanner(myFile, "windows-1251");
             myScan.hasNext();
             String line = myScan.nextLine();
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
-            String serchString = "ПО_Okno-6";
+
 //          вызов функции для поиска строк
-            findString(ffile, "#OFFLINE"); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+            findString(ffile, text); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
 
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.GGGG (пример: 01.01.2016)");
