@@ -21,7 +21,7 @@ public class Main {
 
             BufferedReader input2 = new BufferedReader(new InputStreamReader(System.in));
             String read2 = input2.readLine();
-            String text = read2.substring(0, 2);//22.09.2016
+            String nOkna = ("ПО_Okno-" + read2);
 
 //          чтение файла конфигурации
             InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
@@ -31,7 +31,7 @@ public class Main {
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
 
 //          вызов функции для поиска строк
-            findString(ffile, text); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+            findString(ffile, data, nOkna); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
 
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.GGGG (пример: 01.01.2016)");
@@ -39,26 +39,32 @@ public class Main {
     }
 
     //Вывод найденные строки
-    static void findString(String put, String onrex) {
-//String offrex, String onrex, String keyoffrex, String keyonrex
+    static void findString(String put, String data, String nOkna) {
+    //String nOkna, String data, String keyoffrex, String keyonrex
         try {
             InputStream myFile = new BufferedInputStream(new FileInputStream(put));
-//            Pattern offline = Pattern.compile(offrex);
-            Pattern online = Pattern.compile(onrex);
+            Pattern nomerOkna = Pattern.compile(nOkna);
+            Pattern dataFile = Pattern.compile(data);
 //            Pattern keyoff = Pattern.compile(keyoffrex);
 //            Pattern keyon = Pattern.compile(keyonrex);
             Scanner myScan = new Scanner(myFile, "windows-1251");
 //            проход по строка и поиск згачений
             while (myScan.hasNext()) {
                 String line = myScan.nextLine();
-                String[] substr = line.split(" ");
-//                вывод строк в другом порчдеке
-                if (online.matcher(line).find()) {
-                    String okno = substr[1];
-                    String timest = substr[0];
-                    String time1 = timest.substring(0, 8);
-                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
+                if (dataFile.matcher(line).find()){
+                    System.out.println(line);
+                } else if (nomerOkna.matcher(line).find()){
+                    System.out.println(line);
                 }
+
+//                String[] substr = line.split(" ");
+//                вывод строк в другом порядеке
+//                if (online.matcher(line).find()) {
+//                    String okno = substr[1];
+//                    String timest = substr[0];
+//                    String time1 = timest.substring(0, 8);
+//                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
+//                }
 //                else if (offline.matcher(line).find()) {
 //                    String okno = substr[1];
 //                    String timest = substr[0];
