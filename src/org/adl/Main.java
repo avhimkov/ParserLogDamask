@@ -10,18 +10,21 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 // Меняем вывод даты при вводе
+
         try {
 //          ввод даты в консоль
+            System.out.println("Введите дату");
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             String read = input.readLine();
             String den = read.substring(0, 2);//22.09.2016
             String mon = read.substring(3, 5);
-            String god = read.substring(6, 10);
-            String data = (god + "-" + mon + "-" + den + "-com.txt");
+            String year = read.substring(6, 10);
+            String data = (year + "-" + mon + "-" + den + "-com.txt");
 
-            BufferedReader input2 = new BufferedReader(new InputStreamReader(System.in));
-            String read2 = input2.readLine();
-            String nOkna = ("ПО_Okno-" + read2);
+            System.out.println("Введите номер окна");
+            BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
+            String readNumberWindow = inputNomerOkna.readLine();
+            String nomerWindow = ("ПО_Okno-" + readNumberWindow);
 
 //          чтение файла конфигурации
             InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
@@ -31,22 +34,20 @@ public class Main {
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
 
 //          вызов функции для поиска строк
-            findString(ffile, data, nOkna); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+
+            findString(ffile, data, nomerWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
 
         } catch (StringIndexOutOfBoundsException e) {
-            System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.GGGG (пример: 01.01.2016)");
+            System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
         }
     }
 
     //Вывод найденные строки
-    static void findString(String put, String data, String nOkna) {
-    //String nOkna, String data, String keyoffrex, String keyonrex
+    static void findString(String put, String data, String numberWindow) {
         try {
             InputStream myFile = new BufferedInputStream(new FileInputStream(put));
-            Pattern nomerOkna = Pattern.compile(nOkna);
+            Pattern nomerOkna = Pattern.compile(numberWindow);
             Pattern dataFile = Pattern.compile(data);
-//            Pattern keyoff = Pattern.compile(keyoffrex);
-//            Pattern keyon = Pattern.compile(keyonrex);
             Scanner myScan = new Scanner(myFile, "windows-1251");
 //            проход по строка и поиск згачений
             while (myScan.hasNext()) {
@@ -54,6 +55,7 @@ public class Main {
                 if (dataFile.matcher(line).find()){
                     System.out.println(line);
                 } else if (nomerOkna.matcher(line).find()){
+
                     System.out.println(line);
                 }
 
