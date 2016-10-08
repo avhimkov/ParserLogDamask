@@ -35,7 +35,7 @@ public class Main {
 
 //          вызов функции для поиска строк
 
-            findString(ffile, data, nomerWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+            findString(ffile, /*data,*/ nomerWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
 
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
@@ -43,19 +43,19 @@ public class Main {
     }
 
     //Вывод найденные строки
-    static void findString(String put, String data, String numberWindow) {
+    static void findString(String put, /*String data,*/ String numberWindow) {
         try {
             InputStream myFile = new BufferedInputStream(new FileInputStream(put));
             Pattern nomerOkna = Pattern.compile(numberWindow);
-            Pattern dataFile = Pattern.compile(data);
+//            Pattern dataFile = Pattern.compile(data);
             Scanner myScan = new Scanner(myFile, "windows-1251");
 //            проход по строка и поиск згачений
             while (myScan.hasNext()) {
                 String line = myScan.nextLine();
-                if (dataFile.matcher(line).find()){
-                    System.out.println(line);
-                } else if (nomerOkna.matcher(line).find()){
-
+//                if (dataFile.matcher(line).find()){
+//                    System.out.println(line);
+//                }
+                if (nomerOkna.matcher(line).find()){
                     System.out.println(line);
                 }
 
