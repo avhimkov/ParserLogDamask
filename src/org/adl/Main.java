@@ -29,7 +29,7 @@ public class Main {
             System.out.println("Введите номер окна");
             BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
             String readNumberWindow = inputNomerOkna.readLine();
-            String nomerWindow = ("ПО_Okno-" + readNumberWindow);
+            String numberWindow = ("ПО_Okno-" + readNumberWindow);
 
 //          чтение файла конфигурации
             InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
@@ -37,11 +37,13 @@ public class Main {
             myScan.hasNext();
             String line = myScan.nextLine();
 
+
+//            Path ffile = Paths.get(line, data);
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
 
 //          вызов функции для поиска строк
 
-            findString(ffile, nomerWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+            findString(ffile, numberWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
 
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
@@ -50,7 +52,16 @@ public class Main {
 
     //Вывод найденные строки
     static void findString(String put, String numberWindow) throws IOException {
-        List<String> list = new ArrayList<>();
+
+//        Stream<String> lines = Files.lines(put);
+//        Optional<String> hasPassword = lines.filter(s -> s.contains(numberWindow)).findFirst();
+//        if(hasPassword.isPresent()){
+//            System.out.println(hasPassword.get());
+//        }
+        //Close the stream and it's underlying file as well
+//        lines.close();
+
+//        List<String> list = new ArrayList<>();
 //        try (Stream<String> stream = Files.lines(Paths.get(put))){
 //            list = stream
 //                    .filter(line -> line.matches(numberWindow))
@@ -64,7 +75,6 @@ public class Main {
         Pattern nomerOkna = Pattern.compile(numberWindow);
         Scanner myScan = new Scanner(myFile, "windows-1251");
 
-
 //            проход по строка и поиск згачений
 
             while (myScan.hasNext()) {
@@ -74,6 +84,8 @@ public class Main {
                     System.out.println(line);
                 }
             }
+
+
 //                String[] substr = line.split(" ");
 //                вывод строк в другом порядеке
 //                if (online.matcher(line).find()) {
