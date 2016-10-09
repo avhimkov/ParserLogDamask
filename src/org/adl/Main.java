@@ -1,6 +1,7 @@
 package org.adl;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -37,7 +38,6 @@ public class Main {
             myScan.hasNext();
             String line = myScan.nextLine();
 
-
 //            Path ffile = Paths.get(line, data);
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
 
@@ -53,38 +53,15 @@ public class Main {
     //Вывод найденные строки
     static void findString(String put, String numberWindow) throws IOException {
 
-//        Stream<String> lines = Files.lines(put);
-//        Optional<String> hasPassword = lines.filter(s -> s.contains(numberWindow)).findFirst();
-//        if(hasPassword.isPresent()){
-//            System.out.println(hasPassword.get());
-//        }
-        //Close the stream and it's underlying file as well
-//        lines.close();
-
-//        List<String> list = new ArrayList<>();
-//        try (Stream<String> stream = Files.lines(Paths.get(put))){
-//            list = stream
-//                    .filter(line -> line.matches(numberWindow))
-//                    .collect(Collectors.toList());
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        list.forEach(System.out::println);
-
-        InputStream myFile = new BufferedInputStream(new FileInputStream(put));
-        Pattern nomerOkna = Pattern.compile(numberWindow);
-        Scanner myScan = new Scanner(myFile, "windows-1251");
-
-//            проход по строка и поиск згачений
-
-            while (myScan.hasNext()) {
-                String line = myScan.nextLine();
-
-                if (nomerOkna.matcher(line).find()) {
-                    System.out.println(line);
-                }
-            }
-
+        List<String> list = new ArrayList<>();
+        try (Stream<String> stream = Files.lines(Paths.get(put), Charset.forName("windows-1251"))) {
+            list = stream
+                    .filter(line -> line.contains(numberWindow))
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        list.forEach(System.out::println);
 
 //                String[] substr = line.split(" ");
 //                вывод строк в другом порядеке
