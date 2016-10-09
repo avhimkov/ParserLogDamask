@@ -11,9 +11,17 @@ import java.lang.String;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * @author ADL
+ */
+
 public class Main {
     static boolean flag;
 
+    /**
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
 // Меняем вывод даты при вводе
 
@@ -26,7 +34,7 @@ public class Main {
             String mon = read.substring(3, 5);
             String year = read.substring(6, 10);
             String data = (year + "-" + mon + "-" + den + "-com.txt");
-
+//          получениеи номера окна
             System.out.println("Введите номер окна");
             BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
             String readNumberWindow = inputNomerOkna.readLine();
@@ -38,11 +46,10 @@ public class Main {
             myScan.hasNext();
             String line = myScan.nextLine();
 
-//            Path ffile = Paths.get(line, data);
+//          вызов функци поиска файла
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
 
 //          вызов функции для поиска строк
-
             findString(ffile, numberWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
 
         } catch (StringIndexOutOfBoundsException e) {
@@ -50,6 +57,11 @@ public class Main {
         }
     }
 
+    /**
+     * @param put
+     * @param numberWindow
+     * @throws IOException
+     */
     //Вывод найденные строки
     static void findString(String put, String numberWindow) throws IOException {
 
@@ -92,6 +104,12 @@ public class Main {
 //    }
     }
 
+    /**
+     * {@link}
+     * @param path
+     * @param find
+     * @return path finds file
+     */
     //  поиск файла в директории
     static String findFile(String path, String find) {
         File f = new File(path);
