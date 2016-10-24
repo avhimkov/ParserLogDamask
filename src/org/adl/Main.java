@@ -47,9 +47,8 @@ public class Main {
 //          чтение файла конфигурации
             InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
             Scanner myScan = new Scanner(myFile, "windows-1251");
-            myScan.hasNext();
             String line = myScan.nextLine();
-
+//          нужно описаь для Linux
 //          вызов функци поиска файла
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
 
@@ -124,8 +123,8 @@ public class Main {
             if (find.equals(file)) {
                 flag = true;
             }
-            if (!path.endsWith("\\")) {
-                path += "\\";
+            if (!path.endsWith("/")) {
+                path += "/";
             }
             File tempfile = new File(path + file);
             if (!file.equals(".") && !file.equals("..")) {        //!!!
@@ -135,7 +134,7 @@ public class Main {
                 }
             }
         }
-        return path + "\\" + find;
+        return path + "/" + find;
     }
 }
 
