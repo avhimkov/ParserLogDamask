@@ -41,9 +41,10 @@ public class Main {
             String data = (year + "-" + mon + "-" + den + "-com.txt");
 
             String numberWindow = "(?i).*ПО_.*";
+            String okno = "(?i).*ПО_.*";
             String endString = "(?i).*LINE";
 
-//          получениеи номера окна
+//            получениеи номера окна
 //            System.out.println("Введите номер окна");
 //            BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
 //            String readNumberWindow = inputNomerOkna.readLine();
@@ -55,15 +56,13 @@ public class Main {
 //            BufferedReader inputFindSring = new BufferedReader(new InputStreamReader(System.in));
 //            String readFindString = inputFindSring.readLine();
 
-
 //          нужно описаь для Linux
 //          вызов функци поиска файла
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
 //          вызов функции для поиска строк
-//            findString(ffile, numberWindow, readFindString); // //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
-            findString(ffile, numberWindow).forEach(System.out::println); //, endString
-
-
+//            findString(ffile, numberWindow, endString).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+//            System.out.println("\n" + "\n");
+            findString(ffile, numberWindow, okno).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
         }
@@ -75,26 +74,19 @@ public class Main {
      * @throws IOException
      */
     //Вывод найденные строки
-    static List<String> findString(String put, String numberWindow) throws IOException {//, String endString
+    static List<String> findString(String put, String numberWindow, String endString) throws IOException {//
 
         List<String> list = new ArrayList<>();
         try (Stream<String> stream = Files.lines(Paths.get(put), Charset.forName("windows-1251"))) {
             list = stream
                     .filter(line -> line.matches(numberWindow))
-//                    .filter(line -> line.matches(endString))
+                    .filter(line -> line.matches(endString))
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
 //        list.forEach(System.out::println);
-
-//                String[] substr = line.split(" ");
-//                вывод строк в другом порядеке
-//                if (online.matcher(line).find()) {
-//                    String okno = substr[1];
-//                    String timest = substr[0];
-//                    String time1 = timest.substring(0, 8);
-//                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
+//        System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
         return list;
     }
 
