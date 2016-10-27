@@ -26,6 +26,11 @@ public class Main {
 // Меняем вывод даты при вводе
 
         try {
+//          чтение файла конфигурации
+            InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
+            Scanner myScan = new Scanner(myFile, "windows-1251");
+            String line = myScan.nextLine();
+
 //          ввод даты в консоль
             System.out.println("Введите дату");
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
@@ -35,28 +40,29 @@ public class Main {
             String year = read.substring(6, 10);
             String data = (year + "-" + mon + "-" + den + "-com.txt");
 
+            String numberWindow = "(?i).*ПО_.*";
+            String endString = "(?i).*LINE";
+
 //          получениеи номера окна
 //            System.out.println("Введите номер окна");
 //            BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
 //            String readNumberWindow = inputNomerOkna.readLine();
-            String numberWindow = ("ПО_");// readNumberWindow//Okno-
+//            String numberWindow = ("ПО_" + readNumberWindow);
+
+//            String endString =  "LINE";
 
 //            System.out.println("Введите строку поиска");//KEY_SUCCESS_PRESSED
 //            BufferedReader inputFindSring = new BufferedReader(new InputStreamReader(System.in));
 //            String readFindString = inputFindSring.readLine();
 
-//          чтение файла конфигурации
-            InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
-            Scanner myScan = new Scanner(myFile, "windows-1251");
-            String line = myScan.nextLine();
+
 //          нужно описаь для Linux
 //          вызов функци поиска файла
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
-            String onlien =  "#ONLINE";
-            String offlien =  "#OFFLINE";
 //          вызов функции для поиска строк
 //            findString(ffile, numberWindow, readFindString); // //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
-            findString(ffile, numberWindow); //, onlien
+            findString(ffile, numberWindow).forEach(System.out::println); //, endString
+
 
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
@@ -69,19 +75,18 @@ public class Main {
      * @throws IOException
      */
     //Вывод найденные строки
-    static void findString(String put, String numberWindow) throws IOException {// , String findeSringOne
+    static List<String> findString(String put, String numberWindow) throws IOException {//, String endString
 
         List<String> list = new ArrayList<>();
         try (Stream<String> stream = Files.lines(Paths.get(put), Charset.forName("windows-1251"))) {
             list = stream
-                    .filter(line -> line.contains(numberWindow))
-//                    .filter(line -> line.contains(findeSringOne))
-                    .filter(line -> line.endsWith("LINE"))
+                    .filter(line -> line.matches(numberWindow))
+//                    .filter(line -> line.matches(endString))
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        list.forEach(System.out::println);
+//        list.forEach(System.out::println);
 
 //                String[] substr = line.split(" ");
 //                вывод строк в другом порядеке
@@ -90,11 +95,12 @@ public class Main {
 //                    String timest = substr[0];
 //                    String time1 = timest.substring(0, 8);
 //                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
-
+        return list;
     }
 
     /**
      * {@link}
+     *
      * @param path
      * @param find
      * @return path finds file
