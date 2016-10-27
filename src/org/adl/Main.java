@@ -34,6 +34,7 @@ public class Main {
             String mon = read.substring(3, 5);
             String year = read.substring(6, 10);
             String data = (year + "-" + mon + "-" + den + "-com.txt");
+
 //          получениеи номера окна
 //            System.out.println("Введите номер окна");
 //            BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
@@ -55,7 +56,7 @@ public class Main {
             String offlien =  "#OFFLINE";
 //          вызов функции для поиска строк
 //            findString(ffile, numberWindow, readFindString); // //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
-            findString(ffile, numberWindow, onlien);
+            findString(ffile, numberWindow); //, onlien
 
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
@@ -68,13 +69,14 @@ public class Main {
      * @throws IOException
      */
     //Вывод найденные строки
-    static void findString(String put, String numberWindow , String findeSringOne) throws IOException {//
+    static void findString(String put, String numberWindow) throws IOException {// , String findeSringOne
 
         List<String> list = new ArrayList<>();
         try (Stream<String> stream = Files.lines(Paths.get(put), Charset.forName("windows-1251"))) {
             list = stream
                     .filter(line -> line.contains(numberWindow))
-                    .filter(line -> line.contains(findeSringOne))
+//                    .filter(line -> line.contains(findeSringOne))
+                    .filter(line -> line.endsWith("LINE"))
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
