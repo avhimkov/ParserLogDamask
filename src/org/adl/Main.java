@@ -35,14 +35,14 @@ public class Main {
             String year = read.substring(6, 10);
             String data = (year + "-" + mon + "-" + den + "-com.txt");
 //          получениеи номера окна
-            System.out.println("Введите номер окна");
-            BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
-            String readNumberWindow = inputNomerOkna.readLine();
-            String numberWindow = ("ПО_Okno-" + readNumberWindow);
+//            System.out.println("Введите номер окна");
+//            BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
+//            String readNumberWindow = inputNomerOkna.readLine();
+            String numberWindow = ("ПО_");// readNumberWindow//Okno-
 
-            System.out.println("Введите строку поиска");//KEY_SUCCESS_PRESSED
-            BufferedReader inputFindSring = new BufferedReader(new InputStreamReader(System.in));
-            String readFindString = inputFindSring.readLine();
+//            System.out.println("Введите строку поиска");//KEY_SUCCESS_PRESSED
+//            BufferedReader inputFindSring = new BufferedReader(new InputStreamReader(System.in));
+//            String readFindString = inputFindSring.readLine();
 
 //          чтение файла конфигурации
             InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
@@ -51,9 +51,11 @@ public class Main {
 //          нужно описаь для Linux
 //          вызов функци поиска файла
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
-
+            String onlien =  "#ONLINE";
+            String offlien =  "#OFFLINE";
 //          вызов функции для поиска строк
-            findString(ffile, numberWindow, readFindString); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+//            findString(ffile, numberWindow, readFindString); // //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+            findString(ffile, numberWindow, onlien);
 
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
@@ -66,13 +68,13 @@ public class Main {
      * @throws IOException
      */
     //Вывод найденные строки
-    static void findString(String put, String numberWindow, String findeSring) throws IOException {
+    static void findString(String put, String numberWindow , String findeSringOne) throws IOException {//
 
         List<String> list = new ArrayList<>();
         try (Stream<String> stream = Files.lines(Paths.get(put), Charset.forName("windows-1251"))) {
             list = stream
                     .filter(line -> line.contains(numberWindow))
-                    .filter(line -> line.contains(findeSring))
+                    .filter(line -> line.contains(findeSringOne))
                     .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
@@ -86,26 +88,7 @@ public class Main {
 //                    String timest = substr[0];
 //                    String time1 = timest.substring(0, 8);
 //                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
-//                }
-//                else if (offline.matcher(line).find()) {
-//                    String okno = substr[1];
-//                    String timest = substr[0];
-//                    String time1 = timest.substring(0, 8);
-//                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Нет связи");
-//                } else if (keyoff.matcher(line).find()) {
-//                    String okno = substr[1];
-//                    String timest = substr[0];
-//                    String time1 = timest.substring(0, 8);
-//                    System.out.println("Время: " +time1 + " " + "\033[31m" +  okno + "\033[m" + " Нажата кнопка отключить");
-//                } else if (keyon.matcher(line).find()) {
-////                    int index;
-//                    String okno = substr[1];
-//                    String timest = substr[0];
-//                    String time1 = timest.substring(0, 8);
-//                    String name = substr[substr.length-1];
-//                    System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Имя " + "\033[32m" + name + "\033[m" +  " Нажата кнопка включить");
-//                }
-//    }
+
     }
 
     /**
