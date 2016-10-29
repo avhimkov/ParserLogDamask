@@ -40,29 +40,19 @@ public class Main {
             String year = read.substring(6, 10);
             String data = (year + "-" + mon + "-" + den + "-com.txt");
 
-            String numberWindow = "(?i).*ПО_.*";
-            String okno = "(?i).*ПО_.*";
-            String endString = "(?i).*LINE";
-
 //            получениеи номера окна
+            String ffile = findFile(line, data);//"2016-09-22-com.txt"
+            String allWindow = "(?i).*ПО_.*";
+
 //            System.out.println("Введите номер окна");
 //            BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
 //            String readNumberWindow = inputNomerOkna.readLine();
-//            String numberWindow = ("ПО_" + readNumberWindow);
+//            String numberWindow = ("(?i).*ПО_Okno-"+ readNumberWindow +".*");
+//            findString(ffile, allWindow, numberWindow).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
 
-//            String endString =  "LINE";
+            String onOffLine = "(?i).*LINE";
+            findString(ffile, allWindow, onOffLine).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
 
-//            System.out.println("Введите строку поиска");//KEY_SUCCESS_PRESSED
-//            BufferedReader inputFindSring = new BufferedReader(new InputStreamReader(System.in));
-//            String readFindString = inputFindSring.readLine();
-
-//          нужно описаь для Linux
-//          вызов функци поиска файла
-            String ffile = findFile(line, data);//"2016-09-22-com.txt"
-//          вызов функции для поиска строк
-//            findString(ffile, numberWindow, endString).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
-//            System.out.println("\n" + "\n");
-            findString(ffile, numberWindow, okno).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
         }
