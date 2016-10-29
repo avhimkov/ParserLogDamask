@@ -3,10 +3,8 @@ package org.adl;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.regex.Pattern;
 import java.lang.String;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,7 +14,7 @@ import java.util.stream.Stream;
  */
 
 public class Main {
-    static boolean flag;
+    static boolean flag; /*findFile метод*/
 
     /**
      * @param args
@@ -26,12 +24,12 @@ public class Main {
 // Меняем вывод даты при вводе
 
         try {
-//          чтение файла конфигурации
+            /*чтение файла конфигурации*/
             InputStream myFile = new BufferedInputStream(new FileInputStream("config.txt"));
             Scanner myScan = new Scanner(myFile, "windows-1251");
             String line = myScan.nextLine();
 
-//          ввод даты в консоль
+            /*чтение даты в консоль*/
             System.out.println("Введите дату");
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             String read = input.readLine();
@@ -40,19 +38,21 @@ public class Main {
             String year = read.substring(6, 10);
             String data = (year + "-" + mon + "-" + den + "-com.txt");
 
-//            получениеи номера окна
+            /*сортировка ПО_ все*/
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
             String allWindow = "(?i).*ПО_.*";
 
-            System.out.println("Тип");
+            /*выбор типа сортировки*/
+            System.out.println("Тип вывода");
             BufferedReader inputtype = new BufferedReader(new InputStreamReader(System.in));
             String type = inputtype.readLine();
-            switch (type){
+
+            switch (type) {
                 case "okno":
                     System.out.println("Введите номер окна");
                     BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
                     String readNumberWindow = inputNomerOkna.readLine();
-                    String numberWindow = ("(?i).*Okno-"+ readNumberWindow +".*");
+                    String numberWindow = ("(?i).*Okno-" + readNumberWindow + ".*");
                     findString(ffile, allWindow, numberWindow).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
                     break;
                 case "line":
@@ -68,9 +68,10 @@ public class Main {
     /**
      * @param put
      * @param numberWindow
+     * @param endString
      * @throws IOException
      */
-    //Вывод найденные строки
+    /*Вывод найденные строки*/
     static List<String> findString(String put, String numberWindow, String endString) throws IOException {//
 
         List<String> list = new ArrayList<>();
@@ -94,12 +95,12 @@ public class Main {
      * @param find
      * @return path finds file
      */
-    //  поиск файла в директории
+    /*поиск файла в директории*/
     static String findFile(String path, String find) {
         File f = new File(path);
-        String[] list = f.list();     //список файлов в текущей папке
+        String[] list = f.list();     /*список файлов в текущей папке*/
         assert list != null;
-        for (String file : list) {      //проверка на совпадение
+        for (String file : list) {      /*проверка на совпадение*/
             if (find.equals(file)) {
                 flag = true;
             }
@@ -107,9 +108,9 @@ public class Main {
                 path += "/";
             }
             File tempfile = new File(path + file);
-            if (!file.equals(".") && !file.equals("..")) {        //!!!
-                if (tempfile.isDirectory()) {      //иначе проверяем, если это папка
-                    findFile(path + file, find);               //то рекурсивный вызов этой функции
+            if (!file.equals(".") && !file.equals("..")) {
+                if (tempfile.isDirectory()) {                  /*иначе проверяем, если это папка*/
+                    findFile(path + file, find);               /*то рекурсивный вызов этой функции*/
                     if (flag) return file;
                 }
             }
