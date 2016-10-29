@@ -44,15 +44,22 @@ public class Main {
             String ffile = findFile(line, data);//"2016-09-22-com.txt"
             String allWindow = "(?i).*ПО_.*";
 
-//            System.out.println("Введите номер окна");
-//            BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
-//            String readNumberWindow = inputNomerOkna.readLine();
-//            String numberWindow = ("(?i).*ПО_Okno-"+ readNumberWindow +".*");
-//            findString(ffile, allWindow, numberWindow).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
-
-            String onOffLine = "(?i).*LINE";
-            findString(ffile, allWindow, onOffLine).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
-
+            System.out.println("Тип");
+            BufferedReader inputtype = new BufferedReader(new InputStreamReader(System.in));
+            String type = inputtype.readLine();
+            switch (type){
+                case "okno":
+                    System.out.println("Введите номер окна");
+                    BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
+                    String readNumberWindow = inputNomerOkna.readLine();
+                    String numberWindow = ("(?i).*Okno-"+ readNumberWindow +".*");
+                    findString(ffile, allWindow, numberWindow).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+                    break;
+                case "line":
+                    String onOffLine = "(?i).*LINE";
+                    findString(ffile, allWindow, onOffLine).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+                    break;
+            }
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
         }
