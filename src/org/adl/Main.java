@@ -53,11 +53,11 @@ public class Main {
                     BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
                     String readNumberWindow = inputNomerOkna.readLine();
                     String numberWindow = ("(?i).*Okno-" + readNumberWindow + ".*");
-                    findString(ffile, allWindow, numberWindow).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+                    findString(ffile, allWindow, numberWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
                     break;
                 case "line":
                     String onOffLine = "(?i).*LINE";
-                    findString(ffile, allWindow, onOffLine).forEach(System.out::println); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+                    findString(ffile, allWindow, onOffLine); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
                     break;
             }
         } catch (StringIndexOutOfBoundsException e) {
@@ -72,7 +72,7 @@ public class Main {
      * @throws IOException
      */
     /*Вывод найденные строки*/
-    static List<String> findString(String put, String numberWindow, String endString) throws IOException {//
+    static void findString(String put, String numberWindow, String endString) throws IOException {//
 
         List<String> list = new ArrayList<>();
         try (Stream<String> stream = Files.lines(Paths.get(put), Charset.forName("windows-1251"))) {
@@ -83,9 +83,9 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        list.forEach(System.out::println);
+//        return list;
+        list.forEach(System.out::println);
 //        System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
-        return list;
     }
 
     /**
