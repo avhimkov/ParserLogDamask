@@ -3,6 +3,7 @@ package org.adl;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.lang.String;
@@ -53,11 +54,17 @@ public class Main {
                     BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
                     String readNumberWindow = inputNomerOkna.readLine();
                     String numberWindow = ("(?i).*Okno-" + readNumberWindow + ".*");
-                    findString(ffile, allWindow, numberWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+
+                    List<String> lines = findString(ffile, allWindow, numberWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+                    Path file = Paths.get("okna.txt");
+                    Files.write(file, lines, Charset.forName("UTF-8"));
+
                     break;
                 case "line":
                     String onOffLine = "(?i).*LINE";
-                    findString(ffile, allWindow, onOffLine); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+                    List<String> lines1 = findString(ffile, allWindow, onOffLine); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
+                    Path file1 = Paths.get("line.txt");
+                    Files.write(file1, lines1, Charset.forName("UTF-8"));
                     break;
             }
         } catch (StringIndexOutOfBoundsException e) {
@@ -72,19 +79,20 @@ public class Main {
      * @throws IOException
      */
     /*Вывод найденные строки*/
-    static void findString(String put, String numberWindow, String endString) throws IOException {//
+    static List<String> findString(String put, String numberWindow, String endString) throws IOException {//
 
         List<String> list = new ArrayList<>();
         try (Stream<String> stream = Files.lines(Paths.get(put), Charset.forName("windows-1251"))) {
-            list = stream
+            stream
                     .filter(line -> line.matches(numberWindow))
                     .filter(line -> line.matches(endString))
-                    .collect(Collectors.toList());
+                    .forEach(list::add);
+//                    .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        return list;
-        list.forEach(System.out::println);
+        return list;
+//        list.forEach(Files.createFile("D:\\1",));/*System.out::println*/
 //        System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
     }
 
