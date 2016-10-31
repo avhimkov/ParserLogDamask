@@ -3,11 +3,11 @@ package org.adl;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.lang.String;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -54,7 +54,6 @@ public class Main {
                     BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
                     String readNumberWindow = inputNomerOkna.readLine();
                     String numberWindow = ("(?i).*Okno-" + readNumberWindow + ".*");
-
                     List<String> lines = findString(ffile, allWindow, numberWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
                     Path file = Paths.get("okna.txt");
                     Files.write(file, lines, Charset.forName("UTF-8"));
@@ -69,6 +68,10 @@ public class Main {
             }
         } catch (StringIndexOutOfBoundsException e) {
             System.out.println("Неправельно введена дата. Введите дату в формате DD.MM.EEEE (пример: 01.01.2016)");
+        } catch (FileNotFoundException e) {
+            System.out.println("Нет файла конфигурации config.txt");
+        } catch (NoSuchFileException e) {
+            System.out.println("Такого файла не существует или неправельно введена дата");
         }
     }
 
