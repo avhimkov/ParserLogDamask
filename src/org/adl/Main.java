@@ -53,7 +53,7 @@ public class Main {
                     System.out.println("Введите номер окна");
                     BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
                     String readNumberWindow = inputNomerOkna.readLine();
-                    String numberWindow = ("(?i).*Okno-" + readNumberWindow + ".*");
+                    String numberWindow = ("(?i).*-" + readNumberWindow + ".*");
                     List<String> lines = findString(ffile, allWindow, numberWindow); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
                     Path file = Paths.get("okna.txt");
                     Files.write(file, lines, Charset.forName("UTF-8"));
