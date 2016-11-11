@@ -49,7 +49,7 @@ public class Main {
             String type = inputtype.readLine();
 
             switch (type) {
-                case "okno":
+                case "okno": //for Lyantor
                     System.out.println("Введите номер окна");
                     BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
                     String readNumberWindow = inputNomerOkna.readLine();
@@ -59,17 +59,17 @@ public class Main {
                     Files.write(file, lines, Charset.forName("UTF-8"));
 
                     break;
-                case "oper":
+                case "oper": //for Sortim
                     System.out.println("Введите номер окна");
                     BufferedReader inputNomerOkna1 = new BufferedReader(new InputStreamReader(System.in));
                     String readNumberWindow1 = inputNomerOkna1.readLine();
-                    String numberWindow1 = ("(?i).*OPERATOR-" + readNumberWindow1 + "(?i).*");
+                    String numberWindow1 = ("(?i).*OPERATOR-" + readNumberWindow1 + "(?i).*");//03.11.2016
                     List<String> lines1 = findString(ffile, allWindow, numberWindow1); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
                     Path file1 = Paths.get("oper.txt");
                     Files.write(file1, lines1, Charset.forName("UTF-8"));
 
                     break;
-                case "line":
+                case "line": //ALL
                     String onOffLine = "(?i).*LINE";
                     List<String> lines2 = findString(ffile, allWindow, onOffLine); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
                     Path file2 = Paths.get("line.txt");
@@ -86,12 +86,14 @@ public class Main {
     }
 
     /**
+     *
      * @param put
      * @param numberWindow
      * @param endString
+     * @return "List<String>"
      * @throws IOException
      */
-    /*Вывод найденные строки*/
+    /*Перебор строк в фаайле и передача в List<String>*/
     static List<String> findString(String put, String numberWindow, String endString) throws IOException {//
 
         List<String> list = new ArrayList<>();
@@ -100,13 +102,10 @@ public class Main {
                     .filter(line -> line.matches(numberWindow))
                     .filter(line -> line.matches(endString))
                     .forEach(list::add);
-//                    .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
         return list;
-//        list.forEach(Files.createFile("D:\\1",));/*System.out::println*/
-//        System.out.println("Время: " + time1 + " " + "\033[31m" + okno + "\033[m" + " Соединение установлено");
     }
 
     /**
