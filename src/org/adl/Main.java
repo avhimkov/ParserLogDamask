@@ -70,6 +70,7 @@ public class Main {
 
                     break;
                 case "line": //ALL
+                    System.out.println("Выбрать все\n Пример: line");
                     String onOffLine = "(?i).*LINE";
                     List<String> lines2 = findString(ffile, allWindow, onOffLine); //"#OFFLINE", "#ONLINE", "#KEY_OFF_PRESSED", "#KEY_ON_PRESSED"
                     Path file2 = Paths.get("line.txt");
