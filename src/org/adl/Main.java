@@ -31,7 +31,7 @@ public class Main {
             String line = myScan.nextLine();
 
             /*чтение даты в консоль*/
-            System.out.println("Введите дату");
+            System.out.println("Введите дату\n Пример: 22.09.2017");
             BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
             String read = input.readLine();
             String den = read.substring(0, 2);//22.09.2016
@@ -50,7 +50,7 @@ public class Main {
 
             switch (type) {
                 case "okno": //for Lyantor
-                    System.out.println("Введите номер окна");
+                    System.out.println("Введите номер окна\n Пример: okno");
                     BufferedReader inputNomerOkna = new BufferedReader(new InputStreamReader(System.in));
                     String readNumberWindow = inputNomerOkna.readLine();
                     String numberWindow = ("(?i).*Okno-" + readNumberWindow + "(?i).*");
@@ -60,7 +60,7 @@ public class Main {
 
                     break;
                 case "oper": //for Sortim
-                    System.out.println("Введите номер окна");
+                    System.out.println("Введите номер окна\n Пример: oper");
                     BufferedReader inputNomerOkna1 = new BufferedReader(new InputStreamReader(System.in));
                     String readNumberWindow1 = inputNomerOkna1.readLine();
                     String numberWindow1 = ("(?i).*OPERATOR-" + readNumberWindow1 + "(?i).*");//03.11.2016
